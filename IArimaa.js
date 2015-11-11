@@ -63,11 +63,11 @@ function begin_game(){
 function pinTablero(){
 	pluma.fillStyle = "white";
 	pluma.fillRect(0, 0, 1200, 600);
-	pluma.drawImage(imTablero, 74, 0.5);
+	pluma.drawImage(imTablero, 74, 0);
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
-				pluma.drawImage(tablero[ii][jj].im, 98.89 + 50*ii, 24.89 + 50*jj);
+				pluma.drawImage(tablero[ii][jj].im, 98.89 + 50*ii, 24.39 + 50*jj);
 			}
 		}
 	}
