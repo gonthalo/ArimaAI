@@ -67,7 +67,7 @@ function pinTablero(){
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
-				pluma.drawImage(tablero[ii][jj].im, 333.76 + 50*ii, 33.76 + 50*jj);
+				pluma.drawImage(tablero[ii][jj].im, 98.89 + 50*ii, 24.89 + 50*jj);
 			}
 		}
 	}
