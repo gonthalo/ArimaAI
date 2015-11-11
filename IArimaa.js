@@ -56,7 +56,9 @@ function begin_game(){
 	tablero[0][6]=P.RAS;
 }
 function pinTablero(){
-	pluma.drawImage(imtablero, 601.5, 1.5);
+	pluma.fillStyle = "white";
+	pluma.fillRect(0, 0, 1200, 600);
+	pluma.drawImage(imTablero, 301.5, 1.5);
 }
 function loc(number, board){
 	for (var ii=0; ii<8; ii++){
