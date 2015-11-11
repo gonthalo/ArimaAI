@@ -11,17 +11,29 @@
 		a:hover {
 			background-color: #00d070;
 		}
+		#moving {
+		    position: absolute;
+		    top: 280px;
+		    right: 50px;
+		    width: 250px;
+		    height: 150px;
+		    border: 2px solid #00d070;
+		}
 	</style>
 </head>
 <body>
 	<h2 align="center">Que gane el m&aacute;s intuitivo</h2>
-	<div style="margin-left: 438px; margin-right: 438px;">
-		<canvas id="lienzo" width="451px" height="451px" style="border:2px solid #00d070;">
+	<div style="margin-left: 440px; margin-right: 440px;">
+		<canvas id="lienzo" width="451px" height="451px" style="border:none;">
 			Your browser does not support the HTML5 canvas tag.
 		</canvas>
 		<div>
 			<h3 align="center" text-align="center"><a href="http://arimaa.com/arimaa/">P&aacute;gina oficial de Arimaa</a></h3>
 		</div>
+	</div>
+	<div id="moving">
+		<input type="text" id="moveinput">
+		<input type="button" onclick="magia()" value="Mover">
 	</div>
 	<script type="text/javascript" src="IArimaa.js"></script>
 </body>
