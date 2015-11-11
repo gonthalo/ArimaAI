@@ -8,6 +8,7 @@ var p_val = [-13, -8, -5, -3, -2, -1, 0, 1, 2, 3, 5, 8, 13];
 function valor(piece){
 	return p_val[piece.valor + 6];
 }
+var alf="abcdefgh";
 var P = {
 	RAG : {valor: 1,  name: "gold_rabb.jpg", code: "R"},
 	CAG : {valor: 2,  name: "gold_cat.jpg",  code: "C"},
@@ -32,6 +33,13 @@ for (var iii=0; iii<8; iii++){
 	tablero [iii] = [];
 	for (var jjj=0; jjj<8; jjj++){
 		tablero[iii][jjj] = P.EMP;
+	}
+}
+function inv(let){
+	for (var ii=0; ii<8; ii++){
+		if (alf[ii]==let){
+			return ii;
+		}
 	}
 }
 function begin_game(){
@@ -81,6 +89,29 @@ function loc(number, board){
 		}
 	}
 	return -1;
+}
+function do_move(wor){
+	var lis = wor.split(" ");
+	for (var ii=0; ii<4; ii++){
+		mover(lis[ii]);
+	}
+}
+function mover(wor){
+	var a=inv(wor[1]);
+	var b=parseInt(wor[2]);
+	if (wor[3]=="n"){
+		tablero[a][b + 1] = tablero[a][b];
+	}
+	if (wor[3]=="e"){
+		tablero[a + 1][b] = tablero[a][b];
+	}
+	if (wor[3]=="s"){
+		tablero[a][b - 1] = tablero[a][b];
+	}
+	if (wor[3]=="w"){
+		tablero[a - 1][b] = tablero[a][b];
+	}
+	tablero[a][b]=P.EMP;
 }
 window.onload = function(){
 	begin_game();
