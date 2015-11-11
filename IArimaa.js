@@ -71,11 +71,11 @@ function begin_game(){
 function pinTablero(){
 	pluma.fillStyle = "white";
 	pluma.fillRect(0, 0, 1200, 600);
-	pluma.drawImage(imTablero, 74, 0);
+	pluma.drawImage(imTablero, 0, 0);
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
-				pluma.drawImage(tablero[ii][jj].im, 98.89 + 50*ii, 24.39 + 50*jj);
+				pluma.drawImage(tablero[ii][jj].im, 24.39 + 50*ii, 24.39 + 50*jj);
 			}
 		}
 	}
@@ -99,6 +99,9 @@ function do_move(wor){
 function mover(wor){
 	var a=inv(wor[1]);
 	var b=parseInt(wor[2]);
+	if (tablero[a][b].code!=wor[1]){
+		console.log("mistake");
+	}
 	if (wor[3]=="n"){
 		tablero[a][b + 1] = tablero[a][b];
 	}
@@ -115,5 +118,9 @@ function mover(wor){
 }
 window.onload = function(){
 	begin_game();
+	pinTablero();
+}
+function magia(){
+	do_move(document.getElementById("moveinput").value);
 	pinTablero();
 }
