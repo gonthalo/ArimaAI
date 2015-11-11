@@ -2,7 +2,6 @@ var lienzo = document.getElementById("lienzo");
 var pluma = lienzo.getContext("2d");
 function ut_f(){}
 var imTablero = new Image();
-var imPiece = new Image();
 imTablero.src = "Arimaa_big_board.jpg";
 var tablero = [];
 var p_val = [-13, -8, -5, -3, -2, -1, 0, 1, 2, 3, 5, 8, 13];
@@ -63,6 +62,7 @@ function pinTablero(){
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
+				var imPiece = new Image();
 				imPiece.src = tablero[ii][jj].name;
 				pluma.drawImage(imPiece, 333.76 + 50*ii, 33.76 + 50*jj);
 			}
