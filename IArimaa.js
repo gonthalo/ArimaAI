@@ -5,7 +5,7 @@ var imTablero = new Image();
 imTablero.src = "Arimaa_big_board.jpg";
 var tablero = [];
 var p_val = [-13, -8, -5, -3, -2, -1, 0, 1, 2, 3, 5, 8, 13];
-var piezas [P.RAG, P.CAG, P.DOG, P.HOG, P.CMG, P.ELG, P.RAS, P.CAS, P.DOS, P.HOS, P.CMS, P.ELS, P.EMP]
+var piezas [P.RAG, P.CAG, P.DOG, P.HOG, P.CMG, P.ELG, P.RAS, P.CAS, P.DOS, P.HOS, P.CMS, P.ELS, P.EMP];
 for (var ww=0; ww<piezas.length; ww++){
 	piezas[ww].im = new Image;
 	piezas[ww].im.src = piezas[ww].name;
