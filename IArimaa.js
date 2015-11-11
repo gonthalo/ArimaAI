@@ -99,7 +99,7 @@ function do_move(wor){
 function mover(wor){
 	var a=inv(wor[1]);
 	var b=parseInt(wor[2]) - 1;
-	if (tablero[a][b].code!=wor[1]){
+	if (tablero[a][b].code != wor[0]){
 		console.log("mistake");
 	}
 	if (wor[3]=="n"){
@@ -115,12 +115,42 @@ function mover(wor){
 		tablero[a - 1][b] = tablero[a][b];
 	}
 	tablero[a][b]=P.EMP;
+	if (a<4){
+		a=2;
+	} else {
+		a=5;
+	}
+	if (b<4){
+		b=2;
+	} else {
+		b=5;
+	}
+	if (tablero[a][b]!=P.EMP){
+		bool1 = true;
+		color = tablero[a][b].valor;
+		if (tablero[a + 1][b].valor*color > 0){
+			bool1 = false;
+		}
+		if (tablero[a][b - 1].valor*color > 0){
+			bool1 = false;
+		}
+		if (tablero[a][b + 1].valor*color > 0){
+			bool1 = false;
+		}
+		if (tablero[a - 1][b].valor*color > 0){
+			bool1 = false;
+		}
+		if (bool1){
+			tablero[a][b] = P.EMP;
+		}
+	}
 }
 window.onload = function(){
 	begin_game();
 	pinTablero();
 }
 function magia(){
-	do_move(document.getElementById("moveinput").value);
+	str = document.getElementById("moveinput").value;
+	do_move(str);
 	pinTablero();
 }
