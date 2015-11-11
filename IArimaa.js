@@ -1,5 +1,5 @@
 var lienzo = document.getElementById("lienzo");
-var pluma = lienzo.getContezt("2d");
+var pluma = lienzo.getContext("2d");
 function ut_f(){}
 var imTablero = new Image();
 imTablero.src = "Arimaa_big_board.jpg";
