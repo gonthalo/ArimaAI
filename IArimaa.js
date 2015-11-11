@@ -63,7 +63,7 @@ function begin_game(){
 function pinTablero(){
 	pluma.fillStyle = "white";
 	pluma.fillRect(0, 0, 1200, 600);
-	pluma.drawImage(imTablero, 301.5, 1.5);
+	pluma.drawImage(imTablero, 74, 0.5);
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
