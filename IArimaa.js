@@ -75,7 +75,7 @@ function pinTablero(){
 	for (var ii=0; ii<8; ii++){
 		for (var jj=0; jj<8; jj++){
 			if (tablero[ii][jj].valor!=0){
-				pluma.drawImage(tablero[ii][jj].im, 24.39 + 50*ii, 24.39 + 50*jj);
+				pluma.drawImage(tablero[ii][jj].im, 24.39 + 50*ii, 24.39 + 50*(7 - jj));
 			}
 		}
 	}
@@ -98,7 +98,7 @@ function do_move(wor){
 }
 function mover(wor){
 	var a=inv(wor[1]);
-	var b=parseInt(wor[2]);
+	var b=parseInt(wor[2]) - 1;
 	if (tablero[a][b].code!=wor[1]){
 		console.log("mistake");
 	}
