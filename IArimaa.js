@@ -1,21 +1,27 @@
 var lienzo = document.getElementById("lienzo");
 var pluma = lienzo.getContext("2d");
+var message = document.getElementById("messages");
+message.innerHTML = "Juega oro";
 function ut_f(){}
 var imTablero = new Image();
+var playing_gold = true;
 imTablero.src = "Arimaa_big_board.jpg";
 var tablero = [];
+var tabsim = [];
 var p_val = [-13, -8, -5, -3, -2, -1, 0, 1, 2, 3, 5, 8, 13];
 function valor(piece){
 	return p_val[piece.valor + 6];
 }
 var alf="abcdefgh";
+var dirs="nsew";
+var cod = "emhdcrORCDHME";
 var P = {
-	RAG : {valor: 1,  name: "gold_rabb.jpg", code: "R"},
-	CAG : {valor: 2,  name: "gold_cat.jpg",  code: "C"},
-	DOG : {valor: 3,  name: "gold_dog.jpg",  code: "D"},
-	HOG : {valor: 4,  name: "gold_hors.jpg", code: "H"},
-	CMG : {valor: 5,  name: "gold_came.jpg", code: "M"},
-	ELG : {valor: 6,  name: "gold_elef.jpg", code: "E"},
+	RAG : {valor: 1,  name: "gold_rabb.jpg",   code: "R"},
+	CAG : {valor: 2,  name: "gold_cat.jpg",    code: "C"},
+	DOG : {valor: 3,  name: "gold_dog.jpg",    code: "D"},
+	HOG : {valor: 4,  name: "gold_hors.jpg",   code: "H"},
+	CMG : {valor: 5,  name: "gold_came.jpg",   code: "M"},
+	ELG : {valor: 6,  name: "gold_elef.jpg",   code: "E"},
 	RAS : {valor: -1, name: "silver_rabb.jpg", code: "r"},
 	CAS : {valor: -2, name: "silver_cat.jpg",  code: "c"},
 	DOS : {valor: -3, name: "silver_dog.jpg",  code: "d"},
@@ -31,14 +37,30 @@ for (var ww=0; ww<piezas.length; ww++){
 }
 for (var iii=0; iii<8; iii++){
 	tablero [iii] = [];
+	tabsim [iii] = [];
 	for (var jjj=0; jjj<8; jjj++){
 		tablero[iii][jjj] = P.EMP;
+		tabsim[iii][jjj] = P.EMP;
 	}
 }
-function inv(let){
+function xor(p, q){
+	if (p && q || (!p) && (!q)){
+		return true;
+	}
+	return false;
+}
+function inv(let, lis){
 	for (var ii=0; ii<8; ii++){
-		if (alf[ii]==let){
+		if (lis[ii]==let){
 			return ii;
+		}
+	}
+	return -1;
+}
+function copiar(){
+	for (var ii=0; ii<8; ii++){
+		for (var jj=0; jj<8; jj++){
+			tabsim[ii][jj] = tablero[ii][jj];
 		}
 	}
 }
@@ -90,14 +112,114 @@ function loc(number, board){
 	}
 	return -1;
 }
-function do_move(wor){
-	var lis = wor.split(" ");
-	for (var ii=0; ii<4; ii++){
-		mover(lis[ii]);
+function simpos(a, b, m){
+	if (a<0 || a>7 || b>7 || b<0){
+		return -1;
+	}
+	if (m=="s"){
+		if (b==0){
+			return -1;
+		}
+		return tabsim[a][b - 1];
+	}
+	if (m=="n"){
+		if (b==7){
+			return -1;
+		}
+		return tabsim[a][b + 1];
+	}
+	if (m=="w"){
+		if (a==0){
+			return -1;
+		}
+		return tabsim[a - 1][b];
+	}
+	if (m=="e"){
+		if (a==7){
+			return -1;
+		}
+		return tabsim[a + 1][b];
+	}
+	return -1;
+}
+function pos(a, b, m){
+	if (a<0 || a>7 || b>7 || b<0){
+		return -1;
+	}
+	if (m=="s"){
+		if (b==0){
+			return -1;
+		}
+		return tablero[a][b - 1];
+	}
+	if (m=="n"){
+		if (b==7){
+			return -1;
+		}
+		return tablero[a][b + 1];
+	}
+	if (m=="w"){
+		if (a==0){
+			return -1;
+		}
+		return tablero[a - 1][b];
+	}
+	if (m=="e"){
+		if (a==7){
+			return -1;
+		}
+		return tablero[a + 1][b];
+	}
+	return -1;
+}
+function simula(wor){
+	var a=inv(wor[1], alf);
+	var b=parseInt(wor[2]) - 1;
+	if (wor[3]=="n"){
+		tabsim[a][b + 1] = tabsim[a][b];
+	}
+	if (wor[3]=="e"){
+		tabsim[a + 1][b] = tabsim[a][b];
+	}
+	if (wor[3]=="s"){
+		tabsim[a][b - 1] = tabsim[a][b];
+	}
+	if (wor[3]=="w"){
+		tabsim[a - 1][b] = tabsim[a][b];
+	}
+	tabsim[a][b]=P.EMP;
+	if (a<4){
+		a=2;
+	} else {
+		a=5;
+	}
+	if (b<4){
+		b=2;
+	} else {
+		b=5;
+	}
+	if (tabsim[a][b]!=P.EMP){
+		bool1 = true;
+		color = tabsim[a][b].valor;
+		if (tabsim[a + 1][b].valor*color > 0){
+			bool1 = false;
+		}
+		if (tabsim[a][b - 1].valor*color > 0){
+			bool1 = false;
+		}
+		if (tabsim[a][b + 1].valor*color > 0){
+			bool1 = false;
+		}
+		if (tabsim[a - 1][b].valor*color > 0){
+			bool1 = false;
+		}
+		if (bool1){
+			tabsim[a][b] = P.EMP;
+		}
 	}
 }
 function mover(wor){
-	var a=inv(wor[1]);
+	var a=inv(wor[1], alf);
 	var b=parseInt(wor[2]) - 1;
 	if (tablero[a][b].code != wor[0]){
 		console.log("mistake");
@@ -145,12 +267,106 @@ function mover(wor){
 		}
 	}
 }
+function do_move(wor){
+	var lis = wor.split(" ");
+	for (var ii=0; ii<4; ii++){
+		mover(lis[ii]);
+	}
+}
+function movable(p, q){
+	var k;
+	if (playing_gold){
+		k = 1;
+	} else {
+		k = -1;
+	}
+	var ppp = [];
+	for (var ii=0; ii<4; ii++){
+		ppp[ii] = simpos(p, q, dirs[ii]);
+		if (ppp[ii] != -1){
+			if (ppp[ii].valor * k > 0) {
+				return true;
+			}
+		}
+	}
+	var pp = tabsim[p][q].valor;
+	for (var ii=0; ii<4; ii++){
+		if (ppp[ii] != -1){
+			if ((ppp[ii].valor + pp) * k < 0) {
+				console.log("congelada");
+				return false;
+			}
+		}
+	}
+	return true;
+}
+function is_good(wor){
+	if (wor.length!=4){
+		return false;
+	}
+	var a = inv(wor[1], alf);
+	if (a == -1){
+		return false;
+	}
+	var b = parseInt(wor[2]) - 1;
+	if (b > 7 || b < 0){
+		return false;
+	}
+	if (tabsim[a][b]==P.EMP){
+		return false;
+	}
+	for (var ii=0; ii<4; ii++){
+		if (simpos(a, b, wor[3])!=P.EMP){
+			console.log("casilla ocupada");
+			return false;
+		}
+	}
+	return true;
+}
+function is_correct(wor){
+	if (is_good(wor)){
+		return movable(inv(wor[1], alf), parseInt(wor[2]) - 1);
+	}
+	return false;
+}
+function is_legal(str){
+	var lis = str.split(" ");
+	var col = [];
+	for (var ii=0; ii<4; ii++){
+		col[ii] = xor(inv(lis[ii][3], cod)>6, playing_gold);
+	}
+	if (lis.length!=4){
+		return false;
+	}
+	for (var ii=0; ii<4; ii++){
+		if (!(is_correct(lis[ii])) ){
+			console.log("move: ", ii);
+			return false;
+		}
+		simula(lis[ii]);
+	}
+	return true;
+}
 window.onload = function(){
 	begin_game();
 	pinTablero();
 }
 function magia(){
-	str = document.getElementById("moveinput").value;
-	do_move(str);
-	pinTablero();
+	var str = document.getElementById("moveinput").value;
+	copiar();
+	var bool2 = is_legal(str);
+	if (bool2){
+		message.innerHTML = "";
+		playing_gold = !playing_gold;
+		if (playing_gold){
+			message.innerHTML = "Juega oro";
+		} else {
+			message.innerHTML = "Juega plata";
+		}
+		do_move(str);
+		pinTablero();
+	} else {
+		message.innerHTML = "Movimiento ilegal";
+		console.log("syntax mistake");
+	}
 }
