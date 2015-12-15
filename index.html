@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<title>ARIMAA</title>
+	<style type="text/css">
+		a {
+			color: black;
+			border-radius: 4px;
+			border:2px solid #00d070;
+		}
+		a:hover {
+			background-color: #00d070;
+		}
+		.fixed {
+		    position: absolute;
+		    top: 220px;
+		    right: 50px;
+		    width: 250px;
+		    height: 200px;
+		    border: 2px solid #00d070;
+		}
+		p {
+			padding:none;
+			margin:none;
+		}
+	</style>
+</head>
+<body>
+	<h2 align="center">Que gane el m&aacute;s intuitivo</h2>
+	<div style="margin-left: 440px; margin-right: 440px;">
+		<canvas draggable="true" ondragend="start_drag(event)" id="lienzo" width="451px" height="451px" style="border:none;">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+		<div>
+			<h3 align="center" text-align="center"><a href="http://arimaa.com/arimaa/">P&aacute;gina oficial de Arimaa</a></h3>
+		</div>
+	</div>
+	<div class="fixed">
+		<p>&#x269D; Escribir un movimiento &#x269D; (ej: "Ra2n Md2n Ee2w Hg2n")</p>
+		<input type="text" id="moveinput">
+		<input type="button" onclick="magia()" value="Mover">
+		<p id="messages"></p>
+	</div>
+	<script type="text/javascript" src="IArimaa.js"></script>
+</body>
